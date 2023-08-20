@@ -2,7 +2,9 @@
 using AWSDB.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 using System.Diagnostics;
 using System.Reflection.Metadata;
 
@@ -36,10 +38,31 @@ namespace AWSDB.Controllers
             var getArticulo = _db.Articulo.FromSqlRaw("getArticulo").ToList();
             return View(getArticulo);
         }
-        public ActionResult actualizar()
+        public async Task<ActionResult> actualizar()
         {
+            string Nombre = "Llave Inglesa";
+            int Precio = 3500;
+  
+            var param = new SqlParameter[]
+            {
+                new SqlParameter()
+                {
+                    ParameterName = "@Nombre",
+                    SqlDbType = System.Data.SqlDbType.VarChar,
+                    Value = Nombre
+                },
+                new SqlParameter()
+                {
+                    ParameterName = "@Precio",
+                    SqlDbType = System.Data.SqlDbType.Money,
+                    Value = Precio
+                }
 
-			return RedirectToAction("Index");
+            };
+
+            var addArticulo = await _db.Database.ExecuteSqlRawAsync($"Exec AddArticulo @Nombre, @Precio", param);
+
+			return View();
         }
 	}
 }
