@@ -14,10 +14,26 @@ namespace AWSDB.Controllers
 			_db = db;
 		}
 
+		[HttpPost]
+		public async Task<IActionResult> Create(Articulo article)
+		{
+			// Step 3 code
+
+			if (ModelState.IsValid)
+			{
+				await _db.AddAsync(article);
+				await _db.SaveChangesAsync();
+
+				return RedirectToAction("Index", "Home");
+			}
+
+			return View(article);
+		}
 		public IActionResult Index()
 		{
 			var getArticulo = _db.Articulo.FromSqlRaw("getArticulo").ToList();
 			return View(getArticulo);
 		}
 	}
+
 }

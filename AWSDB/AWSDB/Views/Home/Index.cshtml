@@ -1,27 +1,33 @@
 ﻿@model IEnumerable<LeadDetailsEntity>
 
-<div class="row">
-	<div class="table-responsive">
-		<table class="table table-striped" style="overflow-y:auto;">
-			<thead>
-				<tr>
-					<th>ID</th>
-					<th>Nombre</th>
-					<th>Precio</th>
-				</tr>
-			</thead>
-			<tbody>
-				
-				@foreach (var item in Model)
-				{
+
+
+
+<form asp-controller="Home" method="post">
+
+	<div class="row">
+		<div class="table-responsive">
+			<table class="table table-striped" style="overflow-y:auto;">
+				<thead>
 					<tr>
-						<td>@item.id</td>
-						<td>@item.Nombre</td>
-						<td>@item.Precio</td>
+						<th>ID</th>
+						<th>Nombre</th>
+						<th>Precio</th>
 					</tr>
-				}
-			</tbody>
-		</table>
+				</thead>
+				<tbody>
+
+					@foreach (var item in Model)
+					{
+						<tr>
+							<td>@item.id</td>
+							<td>@item.Nombre</td>
+							<td>@item.Precio</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
 	</div>
-	<button onclick="actualizar">Actualizar</button>
-</div>
+	<button asp-action="CreateArticle" type="submit" class="btn btn-primary">Annadir Articulo</button>
+</form>
