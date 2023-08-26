@@ -32,8 +32,6 @@ namespace AWSDB.Controllers
 			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
 		}
 
-		//---------------------------------------------------------------------------------------------------------
-
 		public IActionResult Index()
 		{
 			var getArticulo = _db.Articulo.FromSqlRaw("getArticulo").ToList();
@@ -52,7 +50,6 @@ namespace AWSDB.Controllers
 		{
 			return RedirectToAction("Create", "Home");
 		}
-
 
 		public IActionResult actualizar(Articulo articulo)
 		{
@@ -81,12 +78,12 @@ namespace AWSDB.Controllers
 					connection.Close();
 					if (resultCode==50002)
 					{
-						TempData["Message"] = "El articulo ya existe";
+						TempData["Message"] = "Nombre de articulo ya existe";
 						return RedirectToAction("Create", "Home");
 					}
 					else
 					{
-						TempData["Message"] = "Articulo agregado con exito";
+						TempData["Message"] = "Insercion exitosa";
 						return RedirectToAction("Index", "Home");
 					}
 				}

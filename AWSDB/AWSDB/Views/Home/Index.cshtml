@@ -1,8 +1,5 @@
 ﻿@model IEnumerable<LeadDetailsEntity>
 
-
-
-
 <form asp-controller="Home" method="post">
 
 	<div class="row">
@@ -29,9 +26,9 @@
 			</table>
 		</div>
 	</div>
-	<button asp-action="CreateArticle" type="submit" class="btn btn-primary">Annadir Articulo</button>
+	<button asp-action="CreateArticle" type="submit" class="btn btn-primary">Insertar Articulo</button>
 </form>
-@if (TempData["Message"] != null)
+@if (TempData["Message"] != null) 
 {
 	<script>
 		alert('@TempData["Message"]');

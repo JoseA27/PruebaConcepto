@@ -14,9 +14,6 @@ namespace AWSDB.Models
         public decimal Precio { get; set;}  
     }
 }
-
-
-
 public class Articulo
 {
 	[Required]

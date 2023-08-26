@@ -17,8 +17,6 @@ namespace AWSDB.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Create(Articulo article)
 		{
-			// Step 3 code
-
 			if (ModelState.IsValid)
 			{
 				await _db.AddAsync(article);
