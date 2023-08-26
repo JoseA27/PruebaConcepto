@@ -57,6 +57,7 @@ namespace AWSDB.Controllers
 		public IActionResult actualizar(Articulo articulo)
 		{
 			if (validarDatos(articulo.Nombre, articulo.Precio)==false) {
+				TempData["Message"] = "Ingrese la informacion del articulo de forma correcta. Nombre: Solo puede contener letras, espacio y guiones. Precio: Solo puede contener numeros enteros o decimales";
 				return RedirectToAction("Create", "Home");
 			}
 			string nombre = articulo.Nombre;
@@ -80,12 +81,12 @@ namespace AWSDB.Controllers
 					connection.Close();
 					if (resultCode==50002)
 					{
-						TempData["Message"] = "El artículo ya existe";
+						TempData["Message"] = "El articulo ya existe";
 						return RedirectToAction("Create", "Home");
 					}
 					else
 					{
-						TempData["Message"] = "Artículo agregado con éxito";
+						TempData["Message"] = "Articulo agregado con exito";
 						return RedirectToAction("Index", "Home");
 					}
 				}
@@ -94,11 +95,11 @@ namespace AWSDB.Controllers
 		public bool validarDatos(string nombre, string precio)
 		{
 			if (nombre==null || precio==null) { return false; }
-			var regex = @"^[a-zA-Z\-]+$";
+			var regex = @"^(?!.*\s{2,})[a-zA-Z\-][a-zA-Z\- ]*[a-zA-Z\-]$";
 			var match = Regex.Match(nombre, regex, RegexOptions.IgnoreCase);
 			var regex2 = @"^(?:\d+|\d+\.\d+)$";
 			var match2 = Regex.Match(precio, regex2, RegexOptions.IgnoreCase);
-			if (match2.Success && match.Success)
+			if (match.Success && match2.Success )
 			{
 				return true;
 			}
