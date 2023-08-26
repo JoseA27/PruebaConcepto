@@ -5,6 +5,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 
 namespace AWSDB.Controllers
 {
@@ -53,8 +54,14 @@ namespace AWSDB.Controllers
 		}
 
 
-		public IActionResult actualizar()
+		public IActionResult actualizar(Articulo articulo)
 		{
+			if (validarDatos(articulo.Nombre, articulo.Precio)==false) {
+				return RedirectToAction("Create", "Home");
+			}
+			string nombre = articulo.Nombre;
+			decimal precio = Convert.ToDecimal(articulo.Precio);	
+
 			
 			using (SqlConnection connection = new SqlConnection(connetionString))
 			{
@@ -63,8 +70,8 @@ namespace AWSDB.Controllers
 				{
 					command.CommandType = CommandType.StoredProcedure;
 
-					command.Parameters.AddWithValue("@inNombre", "Lata Zinc");
-					command.Parameters.AddWithValue("@inPrecio", 4000);
+					command.Parameters.AddWithValue("@inNombre", nombre);
+					command.Parameters.AddWithValue("@inPrecio", precio);
 					command.Parameters.Add("@outResultCode", SqlDbType.Int).Direction = ParameterDirection.Output;
 
 					command.ExecuteNonQuery();
@@ -82,7 +89,19 @@ namespace AWSDB.Controllers
 				}
 			}
 		}
-
+		public bool validarDatos(string nombre, string precio)
+		{
+			if (nombre==null || precio==null) { return false; }
+			var regex = @"^[a-zA-Z\-]+$";
+			var match = Regex.Match(nombre, regex, RegexOptions.IgnoreCase);
+			var regex2 = @"^(?:\d+|\d+\.\d+)$";
+			var match2 = Regex.Match(precio, regex2, RegexOptions.IgnoreCase);
+			if (match2.Success && match.Success)
+			{
+				return true;
+			}
+			return false;
+		}
 		
 	}
 }
