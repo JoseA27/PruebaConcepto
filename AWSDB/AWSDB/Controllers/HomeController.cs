@@ -80,10 +80,12 @@ namespace AWSDB.Controllers
 					connection.Close();
 					if (resultCode==50002)
 					{
+						TempData["Message"] = "El artículo ya existe";
 						return RedirectToAction("Create", "Home");
 					}
 					else
 					{
+						TempData["Message"] = "Artículo agregado con éxito";
 						return RedirectToAction("Index", "Home");
 					}
 				}

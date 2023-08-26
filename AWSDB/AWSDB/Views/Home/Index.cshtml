@@ -31,3 +31,10 @@
 	</div>
 	<button asp-action="CreateArticle" type="submit" class="btn btn-primary">Annadir Articulo</button>
 </form>
+@if (TempData["Message"] != null)
+{
+	<script>
+		alert('@TempData["Message"]');
+	</script>
+}
+Jarmagon — hoy a las 18:45

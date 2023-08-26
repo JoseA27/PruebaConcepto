@@ -19,3 +19,10 @@
     <button asp-action="Volver" type="submit" class="btn btn-primary">Cerrar</button>
 
 </form>
+@if (TempData["Message"] != null)
+{
+    <script>
+        alert('@TempData["Message"]');
+    </script>
+}
+Jarmagon — hoy a las 18:45
